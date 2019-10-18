@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>返回值在对象中的位置</title>
+</head>
+<body>
+
+</body>
+<script>
+    //  返回值在对象中的位置
+    // let returnP = (obj,val) => {
+    //     let onOff = obj instanceof  Object//先判断第一个值是不是对象
+    //     let result = []
+    //     if(!onOff) result.push('obj不是一个数组')
+    //     return result
+    //     for(let key in obj){
+    //         if(val === obj[key]){
+    //             result.push(key)
+    //         }
+    //     }
+    //     return result
+    // }
+    // let a = {
+    //     a:1,
+    //     b:2
+    // }
+    // for(let key in a){
+    //     console.log(key)
+    // }
+    let obj = {
+        name:'wang',
+        age:20,
+        adress:{
+            city:'beijing',
+            country:'china'
+        }
+    }
+    let obtainKey = (obj,val) => {
+        let result = []
+        let onOff = obj instanceof Object
+        if(!onOff){
+            result.push('第一个参数必须是一个对象')
+            return result
+        }else{
+            for(let key in obj){
+                if(obj[key] instanceof Object){
+                    for(let item in obj[key]){
+                        let content = obj[key][item]
+                        let isString = typeof content
+                        if(isString === 'string'){
+                            let hasOrNo = content.indexOf(val)
+                            // hasOrNo !== -1 ? result.push(item) : false
+                            if(hasOrNo !== -1){
+                                result.push(`${key}.${item}`)
+                            }
+                        }else {
+                            console.log(2)
+                            content === val ? result.push(item) : false
+                        }
+                    }
+                }else{
+                   let isString = typeof obj[key]
+                    if(isString === 'string'){
+                        let hasOrNo = obj[key].indexOf(val)
+                        hasOrNo !== -1 ? result.push(`obj.${key}`) : false
+                    }else{
+                        val === obj[key] ? result.push(`obj.${key}`) : false
+                    }
+                }
+            }
+        }
+        return result
+    }
+    console.log(obtainKey(obj,'i'))
+</script>
+</html>
